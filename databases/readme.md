@@ -12,7 +12,15 @@ This docker compose contains these services
 
 The docker-compose.yml file contains the configuration including the passwords
 
-Run it as follows for an interactive session
+Clone the repository as follows
+
+    git clone https://github.com/awchisholm/docker-compose-examples.git
+    
+Change to the folder containing the files
+
+    cd docker-compose-examples/databases
+
+Run the containers as follows for an interactive session - ctrl C exits
 
     docker compose up
   
