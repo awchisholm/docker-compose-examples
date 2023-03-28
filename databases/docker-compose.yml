@@ -1,0 +1,48 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    hostname: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: covid
+    volumes:
+      - $PWD/docker-entrypoint-initdb.d/postgres:/docker-entrypoint-initdb.d
+
+  mysql:
+    image: mysql
+    hostname: mysql
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - $PWD/docker-entrypoint-initdb.d/mysql:/docker-entrypoint-initdb.d
+
+  adminer:
+    image: adminer
+    hostname: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  www:
+    depends_on:
+      - mysql
+    image: php:rc-apache
+    hostname: www
+    container_name: www
+    volumes:
+      - "./www:/var/www/html"
+    ports:
+      - 88:80
